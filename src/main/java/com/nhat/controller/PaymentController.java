@@ -33,12 +33,10 @@ public class PaymentController {
     @Autowired
     private OrderRepository orderRepository;
 
-
     @PostMapping("/payments/{orderId}")
     public ResponseEntity<PaymentLinkResponse> createPaymentLink(@PathVariable Long orderId, @RequestHeader("Authorization") String jwt) throws OrderException, PayPalRESTException {
         Order order = orderService.findOrderById(orderId);
         try {
-
             Payment payment = service.createPayment(order,
                     "http://localhost:3000/payment/" + orderId,
                     "http://localhost:3000/payment/cancel/" + orderId);
